@@ -1,6 +1,8 @@
 import express from 'express'
 import copypastaRouter from './routes/copypastaRoutes.js'
+import authRouter from './routes/authRoutes.js'
 import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -18,8 +20,10 @@ const connect = async () => {
 
 // middleware
 app.use(cors())
+app.use(cookieParser())
 app.use(express.json())
 app.use('/api/copypasta', copypastaRouter)
+app.use('/api/auth', authRouter)
 
 app.get('/', (req, res) => {
     res.send('hello world!')
