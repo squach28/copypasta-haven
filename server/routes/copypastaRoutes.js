@@ -4,7 +4,7 @@ import { addCopypasta, getAllCopypastas, getCopypastaById } from '../controllers
 const router = express.Router()
 
 // GET - Copypasta by ID
-router.get('/:id', getCopypastaById)
+router.get('/getById/:id', getCopypastaById)
 // GET - ALL
 router.get('/all', getAllCopypastas)
 // POST - Add Copypasta
