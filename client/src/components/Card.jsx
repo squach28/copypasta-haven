@@ -10,7 +10,7 @@ const Card = (props) => {
             {props.likes - props.dislikes}
             <ThumbDownIcon />
         </div>
-        <div className="flex flex-col ml-3">
+        <div className="flex flex-col ml-3 pr-5">
             <span className="text-xl font-bold">{props.title}</span>
             <div>
                 {props.content}
