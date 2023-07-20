@@ -1,5 +1,5 @@
 import { useReducer, useState, useEffect } from "react"
-import { Link, redirect } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { loginReducer } from "../reducers/LoginReducer"
 
 const LoginPage = () => {
@@ -7,6 +7,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
     const [randomCopypasta, setRandomCopypasta] = useState(null)
+    const navigate = useNavigate()
     const initialErrors = [
         { 
             name: 'username',
@@ -81,7 +82,7 @@ const LoginPage = () => {
                     console.log(data)
                     dispatch({ 'type': 'USER', message: data.message})
                 } else {
-                    redirect('/')
+                    navigate('/')
                 }
             })
             .catch(err => {

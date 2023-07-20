@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import userRouter from './routes/userRoutes.js'
 dotenv.config()
 const app = express()
 const PORT = 8080 || process.env.PORT
@@ -24,6 +25,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use('/api/copypasta', copypastaRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/users', userRouter)
 
 app.use((req, res, next) => {
     res.header('Content-Type', 'application/json;charset=UTF-8')
