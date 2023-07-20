@@ -1,7 +1,5 @@
 import { useReducer, useState, useEffect } from "react"
 import { Link, redirect } from "react-router-dom"
-import useSWR from 'swr'
-import { fetcher } from "../api/fetcher"
 import { loginReducer } from "../reducers/LoginReducer"
 
 const LoginPage = () => {
@@ -36,7 +34,6 @@ const LoginPage = () => {
     }, [])
     
 
-    const { data, err, isLoading } = useSWR('http://localhost:8080/api/copypasta/randomCopypasta', fetcher)
 
     const handleUsernameChange = (e) => {
         dispatch({ type: 'USER', status: false})
