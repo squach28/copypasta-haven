@@ -20,7 +20,6 @@ export const getAllCopypastas = async (req, res) => {
 }
 
 export const addCopypasta = async (req, res) => {
-    console.log(req.body)
     const newCopypasta = new Copypasta(req.body)
     try {
         const savedCopypasta = await newCopypasta.save()
@@ -28,5 +27,13 @@ export const addCopypasta = async (req, res) => {
     } catch(err) {
         console.log(err)
     }
+}
 
+export const getRandomCopypasta = async (req, res) => {
+    try {
+        const randomCopypasta = await Copypasta.aggregate([{ $sample: { size: 1}}])
+        res.status(200).json(randomCopypasta)
+    } catch(err) {
+        console.log(err)
+    }
 }

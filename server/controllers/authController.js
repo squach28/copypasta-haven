@@ -23,8 +23,6 @@ export const registerUser = async (req, res) => {
 }
 
 export const loginUser = async (req, res) => {
-    console.log('login')
-    console.log(req.body)
     try {
         const user = await User.findOne({username: req.body.username})
 
@@ -42,6 +40,9 @@ export const loginUser = async (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
         
         res.cookie('access_token', token, {
+            httpOnly: true
+        })
+        res.cookie('username', req.body.username, {
             httpOnly: true
         })
 
