@@ -1,6 +1,7 @@
 import User from "../model/User.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { createError } from "../utils/createError.js";
 
 export const registerUser = async (req, res) => {
     try {
@@ -13,12 +14,21 @@ export const registerUser = async (req, res) => {
         })
     
         await newUser.save()
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             message: 'User has been successfully created'
         })
     } catch(err) {
         console.log(err)
+        // username already in use 
+        if(err.code === 11000) {
+            console.log('username already in use')
+            res.status(400).json({
+                success: false,
+                message: 'Username is already taken'
+            })
+            return createError(400, 'Username is already in use')
+        }
     }
 }
 

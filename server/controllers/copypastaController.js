@@ -23,7 +23,7 @@ export const addCopypasta = async (req, res) => {
     const newCopypasta = new Copypasta(req.body)
     try {
         const savedCopypasta = await newCopypasta.save()
-        res.status(200).json(savedCopypasta)
+        res.status(201).json(savedCopypasta)
     } catch(err) {
         console.log(err)
     }

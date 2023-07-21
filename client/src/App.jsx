@@ -10,7 +10,7 @@ function App() {
     return (
       <div className="w-full h-full bg-slate-200">
         <Navbar />
-        {isLoading ? 'Loading...' : null}0
+        {isLoading ? 'Loading...' : null}
         {data ?
           data.map(copypasta => <Card key={copypasta._id} {...copypasta}/>)
         : null}

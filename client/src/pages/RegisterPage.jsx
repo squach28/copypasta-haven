@@ -70,7 +70,6 @@ const RegisterPage = () => {
             dispatch({ type: 'EMAIL_EMPTY'})
         } else {
             dispatch({ type: 'EMAIL_NOT_EMPTY' })
-            console.log(e.target.value)
             if(!validator.isEmail(e.target.value)) {
                 dispatch({ type: 'EMAIL_INVALID' })
             }
@@ -108,8 +107,6 @@ const RegisterPage = () => {
 
     const renderErrorMessage = (errorName) => {
         let element = null
-        console.log(errors)
-        console.log(errorName)
         errors.map(err => {
             if(err.name === errorName && err.status) {
                 element = <div className="text-red-600 font-bold flex items-center justify-end gap-2 text-sm" key={err.name}><ErrorIcon />{err.message}</div>
@@ -120,10 +117,31 @@ const RegisterPage = () => {
         return element
     }
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault()
         setLoading(true)
+        await register(username, email, password)
         setLoading(false)
+    }
+
+    const register = async (username, email, password) => {
+    
+        const user = {
+            username: username,
+            email: email,
+            password: password
+        }
+        
+        fetch('http://localhost:8080/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
     }
 
 
