@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import Cookies from 'js-cookie'
 import { useEffect, useState } from "react"
+import MenuIcon from '@mui/icons-material/Menu';
 
 
 const Navbar = () => {
@@ -20,7 +21,14 @@ const Navbar = () => {
     <div className="w-full p-3 bg-blue-200">
         <ul className="flex justify-between">
             <li><Link className="text-xl font-bold" to="/">Copypasta Haven</Link></li>
-           {Cookies.get('user_id') && username ? <li>Hi {username}!</li> : <li><Link to="/login">Login</Link></li>}
+           {Cookies.get('user_id') && username ?
+              <li>
+                <MenuIcon className="md:hidden" />
+                <div className="hidden md:block">
+                    {username}
+                </div>
+              </li> : 
+              <li><Link to="/login">Login</Link></li>}
         </ul>
     </div>
   )

@@ -8,7 +8,7 @@ function App() {
     const { data, err, isLoading } = useSWR('http://localhost:8080/api/copypasta/all', fetcher)
 
     return (
-      <div className="w-screen h-full bg-slate-200">
+      <div className="w-full h-full bg-slate-200">
         <Navbar />
         {isLoading ? 'Loading...' : null}
         {data ?
