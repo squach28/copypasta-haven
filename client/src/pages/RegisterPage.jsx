@@ -160,6 +160,10 @@ const RegisterPage = () => {
         
     }
 
+    const inputsEmpty = () => {
+        return username === '' || email === '' || password === '' || confirmPassword === ''
+    }
+
 
     return (
         <div className="flex w-screen h-full">
@@ -212,7 +216,7 @@ const RegisterPage = () => {
                 />
                 {renderErrorMessage('confirmPassword')}
                 {renderErrorMessage('mismatchingPasswords')}
-                <button disabled={loading || errorsPresent()} onClick={handleRegister} className={`mt-5 px-2 py-3  font-bold rounded-md hover:bg-green-700 ${loading ? 'bg-green-200' : 'bg-green-500'} disabled:opacity-50`}>
+                <button disabled={loading || errorsPresent() || inputsEmpty()} onClick={handleRegister} className={`mt-5 px-2 py-3  font-bold rounded-md hover:bg-green-700 ${loading ? 'bg-green-200' : 'bg-green-500'} disabled:opacity-50`}>
                     {loading ? 'Logging in...': 'Register'}
                 </button>
             </form>
