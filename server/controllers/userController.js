@@ -13,5 +13,20 @@ export const getUserSelf = async (req, res) => {
     } catch (err) {
         return createError(404, 'User not found')
     }
+}
 
+export const getUserByUsername = async (req, res) => {
+    try {
+        const { username } = req.body
+        const user = await User.findOne({
+            username: username
+        })
+        if(!user) {
+            res.status(200).json({ sucess: true, })
+        } else {
+            res.status(400).json({ success: false })
+        }
+    } catch(err) {
+        res.status(500).json({ success: false, message: 'Something went wrong. Try again later'})
+    }
 }

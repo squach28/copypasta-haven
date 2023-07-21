@@ -53,12 +53,12 @@ const RegisterPage = () => {
         fetch('http://localhost:8080/api/copypasta/randomCopypasta')
             .then(res => res.json())
             .then(data => setRandomCopypasta(data))
-/*
+
         const focusListener = document.addEventListener('focusout', (e) => {
-            console.log(e)
+            console.log(e.target)
         })
 
-        return document.removeEventListener('focusout', focusListener) */
+        return document.removeEventListener('focusout', focusListener) 
     }, [])
 
     const handleUsernameChange = (e) => {
@@ -154,6 +154,10 @@ const RegisterPage = () => {
         const isErrorPresent = errors.find(err => err.status)
 
         return isErrorPresent
+    }
+
+    const verifyUsernameTaken = (username) => {
+        
     }
 
 
