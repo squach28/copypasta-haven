@@ -1,7 +1,8 @@
 import { useState, useEffect, useReducer } from 'react' 
 import { Link } from 'react-router-dom'
 import { registerReducer } from '../reducers/RegisterReducer'
-import ErrorIcon from '@mui/icons-material/Error';
+import ErrorIcon from '@mui/icons-material/Error'
+import validator from 'validator'
 
 const RegisterPage = () => {
 
@@ -69,6 +70,10 @@ const RegisterPage = () => {
             dispatch({ type: 'EMAIL_EMPTY'})
         } else {
             dispatch({ type: 'EMAIL_NOT_EMPTY' })
+            console.log(e.target.value)
+            if(!validator.isEmail(e.target.value)) {
+                dispatch({ type: 'EMAIL_INVALID' })
+            }
         }
         setEmail(e.target.value)
     }
@@ -103,9 +108,11 @@ const RegisterPage = () => {
 
     const renderErrorMessage = (errorName) => {
         let element = null
+        console.log(errors)
+        console.log(errorName)
         errors.map(err => {
             if(err.name === errorName && err.status) {
-                element = <div className="text-red-600 font-bold flex items-center justify-end gap-2" key={err.name}><ErrorIcon />{err.message}</div>
+                element = <div className="text-red-600 font-bold flex items-center justify-end gap-2 text-sm" key={err.name}><ErrorIcon />{err.message}</div>
             } 
             return null
         })

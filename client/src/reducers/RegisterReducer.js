@@ -43,6 +43,16 @@ export const registerReducer = (state, action) => {
                     return err
             })
 
+            case 'EMAIL_INVALID':
+                return state.map(err => {
+                    if(err.name === 'email') {
+                        err.status = true
+                        err.message = 'Email is not valid'
+                    }
+                    return err
+                })
+
+
 
             case 'PASSWORD_EMPTY':
                 return state.map(err => {
