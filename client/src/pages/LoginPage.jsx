@@ -98,7 +98,7 @@ const LoginPage = () => {
                 </div>
             </div>
             <div className="flex-1 h-screen flex flex-col px-10 justify-center md:max-w-lg mx-auto">
-                <h1 className="text-center text-3xl font-bold">Copypasta Haven</h1>
+                <h1 className="text-3xl font-bold text-start">Welcome back!</h1>
                 <form className="flex flex-col gap-2 mt-5">
                     <label className="font-bold" htmlFor="username">Username</label>
                     <input 
@@ -113,8 +113,6 @@ const LoginPage = () => {
                         if(err.name === 'username') {
                             if(err.status) {
                                 return <div className="text-end text-red-600 font-bold" key={err.name}>{err.message}</div>
-                            } else {
-                                return <div className="hidden" key={err.name}></div>
                             }
 
                         }

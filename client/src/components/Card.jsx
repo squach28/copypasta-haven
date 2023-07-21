@@ -4,7 +4,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 const Card = (props) => {
   return (
-    <div className="flex pl-0 mt-3 shadow-md w-full bg-white py-2">
+    <div className="flex pl-0 my-3 shadow-md w-full bg-white py-2">
         <div className="flex flex-col items-center ml-3">
             <ThumbUpIcon />
             {props.likes - props.dislikes}
