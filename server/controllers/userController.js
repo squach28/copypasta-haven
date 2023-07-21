@@ -17,14 +17,14 @@ export const getUserSelf = async (req, res) => {
 
 export const getUserByUsername = async (req, res) => {
     try {
-        const { username } = req.body
+        const { username } = req.params
         const user = await User.findOne({
             username: username
         })
         if(!user) {
-            res.status(200).json({ sucess: true, })
+            res.status(200).json({ success: true })
         } else {
-            res.status(400).json({ success: false })
+            res.status(400).json({ success: false, message: 'Username is already taken' })
         }
     } catch(err) {
         res.status(500).json({ success: false, message: 'Something went wrong. Try again later'})

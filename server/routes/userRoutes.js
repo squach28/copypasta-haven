@@ -7,6 +7,6 @@ const userRouter = express.Router()
 // GET - Self Data by ID
 userRouter.get('/user/self/:id', verifyUser, getUserSelf)
 // GET - User by Username
-userRouter.get('/user', getUserByUsername)
+userRouter.get('/user/:username', getUserByUsername)
 
 export default userRouter

@@ -55,20 +55,26 @@ const RegisterPage = () => {
             .then(data => setRandomCopypasta(data))
 
         const focusListener = document.addEventListener('focusout', (e) => {
-            console.log(e.target)
+            const inputId = e.target.id
+            if(inputId === 'username' && e.target.value !== '') {
+                console.log(e.target.value)
+                verifyUsernameTaken(e.target.value)
+            }
         })
 
         return document.removeEventListener('focusout', focusListener) 
     }, [])
 
     const handleUsernameChange = (e) => {
+        setUsername(e.target.value)
         dispatch({ type: 'USER', status: false})
+        dispatch({ type: 'USERNAME_CLEAR_ERROR' })
         if(e.target.value === '') {
             dispatch({ type: 'USERNAME_EMPTY' })
         } else {
             dispatch({ type: 'USERNAME_NOT_EMPTY' })
         }
-        setUsername(e.target.value)
+        
     }
 
     const handleEmailChange = (e) => {
@@ -157,7 +163,15 @@ const RegisterPage = () => {
     }
 
     const verifyUsernameTaken = (username) => {
-        
+        fetch(`http://localhost:8080/api/users/user/${username}`)
+        .then(res => res.json())
+        .then(data => {
+            if(!data.success) {
+                dispatch({
+                    type: 'USERNAME_TAKEN',
+                })
+            }
+        })
     }
 
     const inputsEmpty = () => {

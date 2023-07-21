@@ -10,9 +10,26 @@ export const registerReducer = (state, action) => {
                 return err
             })
 
-
-
             case 'USERNAME_NOT_EMPTY':
+                return state.map(err => {
+                    if(err.name === 'username') {
+                        err.status = false
+                        err.message = ''
+                    }
+    
+                    return err
+                })
+            
+            case 'USERNAME_TAKEN':
+                return state.map(err => {
+                    if(err.name === 'username') {
+                        err.status = true
+                        err.message = 'Username is already taken'
+                    }
+                    return err
+                })
+
+            case 'USERNAME_CLEAR_ERROR':
                 return state.map(err => {
                     if(err.name === 'username') {
                         err.status = false
