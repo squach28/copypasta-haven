@@ -57,8 +57,11 @@ const RegisterPage = () => {
         const focusListener = document.addEventListener('focusout', (e) => {
             const inputId = e.target.id
             if(inputId === 'username' && e.target.value !== '') {
-                console.log(e.target.value)
                 verifyUsernameTaken(e.target.value)
+            }
+
+            if(inputId === 'email' && e.target.value !== '') {
+                verifyEmailTaken(e.target.value)
             }
         })
 
@@ -163,12 +166,24 @@ const RegisterPage = () => {
     }
 
     const verifyUsernameTaken = (username) => {
-        fetch(`http://localhost:8080/api/users/user/${username}`)
+        fetch(`http://localhost:8080/api/users/userByUsername/${username}`)
         .then(res => res.json())
         .then(data => {
             if(!data.success) {
                 dispatch({
                     type: 'USERNAME_TAKEN',
+                })
+            }
+        })
+    }
+
+    const verifyEmailTaken = (email) => {
+        fetch(`http://localhost:8080/api/users/userByEmail/${email}`)
+        .then(res => res.json())
+        .then(data => {
+            if(!data.success) {
+                dispatch({
+                    type: 'EMAIL_TAKEN',
                 })
             }
         })

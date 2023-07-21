@@ -30,3 +30,19 @@ export const getUserByUsername = async (req, res) => {
         res.status(500).json({ success: false, message: 'Something went wrong. Try again later'})
     }
 }
+
+export const getUserByEmail = async (req, res) => {
+    try {
+        const { email } = req.params
+        const user = await User.findOne({
+            email: email
+        })
+        if(!user) {
+            res.status(200).json({ success: true })
+        } else {
+            res.status(400).json({ success: false, message: 'Email is already taken' })
+        }
+    } catch(err) {
+        res.status(500).json({ success: false, message: 'Something went wrong. Try again later'})
+    }
+}

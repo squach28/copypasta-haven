@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUserByUsername, getUserSelf } from '../controllers/userController.js'
+import { getUserByEmail, getUserByUsername, getUserSelf } from '../controllers/userController.js'
 import { verifyUser } from '../utils/verifyToken.js'
 
 const userRouter = express.Router()
@@ -7,6 +7,8 @@ const userRouter = express.Router()
 // GET - Self Data by ID
 userRouter.get('/user/self/:id', verifyUser, getUserSelf)
 // GET - User by Username
-userRouter.get('/user/:username', getUserByUsername)
+userRouter.get('/userByUsername/:username', getUserByUsername)
+// GET - User by Email
+userRouter.get('/userByEmail/:email', getUserByEmail)
 
 export default userRouter
