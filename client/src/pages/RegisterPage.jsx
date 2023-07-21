@@ -53,6 +53,12 @@ const RegisterPage = () => {
         fetch('http://localhost:8080/api/copypasta/randomCopypasta')
             .then(res => res.json())
             .then(data => setRandomCopypasta(data))
+/*
+        const focusListener = document.addEventListener('focusout', (e) => {
+            console.log(e)
+        })
+
+        return document.removeEventListener('focusout', focusListener) */
     }, [])
 
     const handleUsernameChange = (e) => {
@@ -144,6 +150,12 @@ const RegisterPage = () => {
             .catch(err => console.log(err))
     }
 
+    const errorsPresent = () => {
+        const isErrorPresent = errors.find(err => err.status)
+
+        return isErrorPresent
+    }
+
 
     return (
         <div className="flex w-screen h-full">
@@ -196,7 +208,7 @@ const RegisterPage = () => {
                 />
                 {renderErrorMessage('confirmPassword')}
                 {renderErrorMessage('mismatchingPasswords')}
-                <button disabled={loading} onClick={handleRegister} className={`mt-5 px-2 py-3  font-bold rounded-md hover:bg-green-700 ${loading ? 'bg-green-200' : 'bg-green-500'}`}>
+                <button disabled={loading || errorsPresent()} onClick={handleRegister} className={`mt-5 px-2 py-3  font-bold rounded-md hover:bg-green-700 ${loading ? 'bg-green-200' : 'bg-green-500'} disabled:opacity-50`}>
                     {loading ? 'Logging in...': 'Register'}
                 </button>
             </form>
