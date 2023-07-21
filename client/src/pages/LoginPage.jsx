@@ -1,6 +1,7 @@
 import { useReducer, useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { loginReducer } from "../reducers/LoginReducer"
+import ErrorIcon from '@mui/icons-material/Error';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('')
@@ -56,6 +57,18 @@ const LoginPage = () => {
         setPassword(e.target.value)
     }
 
+    const renderErrorMessage = (errorName) => {
+        let element = null
+        errors.map(err => {
+            if(err.name === errorName && err.status) {
+                element = <div className="text-red-600 font-bold flex items-center justify-end gap-2" key={err.name}><ErrorIcon />{err.message}</div>
+            } 
+            return null
+        })
+
+        return element
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -109,15 +122,7 @@ const LoginPage = () => {
                         onChange={handleUsernameChange} 
                         value={username} 
                     />
-                    {errors.map(err => {
-                        if(err.name === 'username') {
-                            if(err.status) {
-                                return <div className="text-end text-red-600 font-bold" key={err.name}>{err.message}</div>
-                            }
-
-                        }
-                        return null
-                    })}
+                    {renderErrorMessage('username')}
                     <label className="font-bold" htmlFor="password">Password</label>
                     <input 
                         id="password" 
@@ -127,12 +132,7 @@ const LoginPage = () => {
                         onChange={handlePasswordChange} 
                         value={password} 
                     />
-                    {errors.map(err => {
-                        if(err.name === 'password' && err.status) {
-                            return <div className="text-end text-red-600 font-bold" key={err.name}>{err.message}</div>
-                        }
-                        return null
-                    })}
+                    {renderErrorMessage('password')}
 
                     {errors.map(err => {
                         if(err.name === 'user' && err.status) {
