@@ -79,7 +79,6 @@ const LoginPage = () => {
             .then(res => res.json())
             .then(data => {
                 if(!data.success) {
-                    console.log(data)
                     dispatch({ 'type': 'USER', message: data.message})
                 } else {
                     navigate('/')
