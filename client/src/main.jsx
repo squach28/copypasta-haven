@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RegisterPage from './pages/RegisterPage.jsx'
+import CreatePostPage from './pages/CreatePostPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <RegisterPage />
+  },
+  {
+    path: '/createPost',
+    element: <CreatePostPage />
   }
 ])
 

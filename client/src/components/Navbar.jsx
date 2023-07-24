@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import Cookies from 'js-cookie'
 import { useEffect, useState } from "react"
 import MenuIcon from '@mui/icons-material/Menu';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 
 const Navbar = (props) => {
@@ -29,11 +30,12 @@ const Navbar = (props) => {
             <li><Link className="text-xl font-bold" to="/">Copypasta Haven</Link></li>
            {Cookies.get('user_id') && username ?
               <li>
-                <div className="md:hidden"  onClick={props.toggleOverlay}>
-                  <MenuIcon />
+                <div className=" flex  gap-5 md:hidden">
+                  <Link to="createPost"><PostAddIcon className="cursor-pointer" /></Link>
+                  <MenuIcon className="cursor-pointer" onClick={props.toggleOverlay} />
                 </div>
-                <div className="hidden md:block">
-                    {username}
+                <div className="hidden md:block cursor-pointer">
+                    Hi {username}!
                 </div>
               </li> : 
               <li>
