@@ -2,27 +2,25 @@ import { Link } from "react-router-dom"
 import Cookies from 'js-cookie'
 import { useEffect, useState } from "react"
 import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate } from "react-router-dom";
 
 
-const Navbar = () => {
+const Navbar = (props) => {
 
   const [username, setUsername] = useState(null)
-  const navigate = useNavigate()
+
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/users/user/self/${Cookies.get('user_id')}`, {
-      credentials: 'include'
-    })
-      .then(res => res.json())
-      .then(data => setUsername(data.username))
+    if(Cookies.get('user_id')) {
+      fetch(`http://localhost:8080/api/users/user/self/${Cookies.get('user_id')}`, {
+        credentials: 'include'
+      })
+        .then(res => res.json())
+        .then(data => setUsername(data.username))
+    }
+
   }, [])
 
-  const logout = () => {
-    Cookies.remove('access_token')
-    Cookies.remove('user_id')
-    navigate(0)
-  }
+
 
   return (
 
@@ -30,8 +28,8 @@ const Navbar = () => {
         <ul className="flex justify-between">
             <li><Link className="text-xl font-bold" to="/">Copypasta Haven</Link></li>
            {Cookies.get('user_id') && username ?
-              <li onClick={logout}>
-                <div className="md:hidden">
+              <li>
+                <div className="md:hidden"  onClick={props.toggleOverlay}>
                   <MenuIcon />
                 </div>
                 <div className="hidden md:block">
