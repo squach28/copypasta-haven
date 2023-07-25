@@ -41,7 +41,7 @@ const Navbar = () => {
                     <Link to="/createPost"><PostAddIcon className="cursor-pointer" /></Link>
                     <MenuIcon className="cursor-pointer" onClick={toggleMenu} />
                   </div>
-                  <div className="hidden md:block cursor-pointer">
+                  <div className="hidden md:block cursor-pointer" onClick={toggleMenu}>
                       Hi {username}!
                   </div>
                 </li> :
