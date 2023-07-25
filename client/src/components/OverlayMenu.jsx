@@ -8,6 +8,7 @@ const OverlayMenu = () => {
     const logout = () => {
         Cookies.remove('access_token')
         Cookies.remove('user_id')
+        navigate('/')
         navigate(0)
       }
 

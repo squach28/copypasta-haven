@@ -2,10 +2,16 @@
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const Card = (props) => {
+  const navigate = useNavigate()
 
   const handleLike = () => {
+    if(Cookies.get('user_id') === undefined) {
+      navigate('/login')
+      return
+    }
     fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${props._id}`, {
       method: 'PUT',
       headers: {
@@ -26,6 +32,10 @@ const Card = (props) => {
   }
 
   const handleDislike = () => {
+    if(Cookies.get('user_id') === undefined) {
+      navigate('/login')
+      return
+    }
     fetch(`http://localhost:8080/api/copypasta/decrementCopypastaLikes/${props._id}`, {
       method: 'PUT',
       headers: {
