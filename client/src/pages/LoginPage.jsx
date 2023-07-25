@@ -1,7 +1,7 @@
 import { useReducer, useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { loginReducer } from "../reducers/LoginReducer"
-import ErrorIcon from '@mui/icons-material/Error';
+import ErrorIcon from '@mui/icons-material/Error'
 
 const LoginPage = () => {
     const [username, setUsername] = useState('')
@@ -140,7 +140,7 @@ const LoginPage = () => {
                         }
                         return null
                     })}
-                    <button disabled={loading} onClick={handleLogin} className={`mt-5 px-2 py-3  font-bold rounded-md hover:bg-green-700 ${loading ? 'bg-green-200' : 'bg-green-500'}`}>
+                    <button disabled={loading} onClick={handleLogin} className={`mt-5 px-2 py-3 font-bold rounded-md hover:bg-green-700 ${loading ? 'bg-green-200' : 'bg-green-500'}`}>
                         {loading ? 'Logging in...': 'Login'}
                     </button>
                 </form>

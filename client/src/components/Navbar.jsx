@@ -37,12 +37,13 @@ const Navbar = () => {
               <li><Link className="text-xl font-bold" to="/">Copypasta Haven</Link></li>
              {Cookies.get('user_id') && username ?
                 <li>
-                  <div className=" flex  gap-5 md:hidden">
+                  <div className="flex gap-5 md:hidden">
                     <Link to="/createPost"><PostAddIcon className="cursor-pointer" /></Link>
                     <MenuIcon className="cursor-pointer" onClick={toggleMenu} />
                   </div>
-                  <div className="hidden md:block cursor-pointer" onClick={toggleMenu}>
-                      Hi {username}!
+                  <div className="hidden md:flex md:gap-5 cursor-pointer">
+                    <Link to="/createPost"><PostAddIcon className="cursor-pointer" /></Link>
+                    <p onClick={toggleMenu}>Hi {username}!</p>
                   </div>
                 </li> :
                 <li>

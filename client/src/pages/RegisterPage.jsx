@@ -1,8 +1,8 @@
 import { useState, useEffect, useReducer } from 'react' 
 import { Link } from 'react-router-dom'
 import { registerReducer } from '../reducers/RegisterReducer'
-import ErrorIcon from '@mui/icons-material/Error'
 import validator from 'validator'
+import ErrorIcon from '@mui/icons-material/Error'
 
 const RegisterPage = () => {
 
@@ -120,18 +120,6 @@ const RegisterPage = () => {
         setConfirmPassword(e.target.value)
     }
 
-    const renderErrorMessage = (errorName) => {
-        let element = null
-        errors.map(err => {
-            if(err.name === errorName && err.status) {
-                element = <div className="text-red-600 font-bold flex items-center justify-end gap-2 text-sm" key={err.name}><ErrorIcon />{err.message}</div>
-            } 
-            return null
-        })
-
-        return element
-    }
-
     const handleRegister = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -191,6 +179,18 @@ const RegisterPage = () => {
 
     const inputsEmpty = () => {
         return username === '' || email === '' || password === '' || confirmPassword === ''
+    }
+
+    const renderErrorMessage = (errorName) => {
+        let element = null
+        errors.map(err => {
+            if(err.name === errorName && err.status) {
+                element = <div className="text-red-600 font-bold flex items-center justify-end gap-2" key={err.name}><ErrorIcon />{err.message}</div>
+            } 
+            return null
+        })
+
+        return element
     }
 
 
