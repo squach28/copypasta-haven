@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer } from 'react' 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { registerReducer } from '../reducers/RegisterReducer'
 import validator from 'validator'
 import ErrorIcon from '@mui/icons-material/Error'
@@ -12,6 +12,7 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     const initialErrors = [
         { 
@@ -143,7 +144,10 @@ const RegisterPage = () => {
             body: JSON.stringify(user)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(() => {
+                navigate('/')
+            
+            })
             .catch(err => console.log(err))
     }
 

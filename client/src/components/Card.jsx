@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import Cookies from 'js-cookie';
 
 const Card = (props) => {
 
@@ -8,6 +9,15 @@ const Card = (props) => {
     // update on user 
     // update on table
     fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${props._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+
+    fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
