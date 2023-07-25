@@ -102,6 +102,16 @@ const LoginPage = () => {
             })
     }
 
+    const errorsPresent = () => {
+        const isErrorPresent = errors.find(err => err.status)
+
+        return isErrorPresent
+    }
+
+    const inputsEmpty = () => {
+        return username === '' || password === '' 
+    }
+
 
     return (
         <div className="flex w-screen h-full">
@@ -133,14 +143,8 @@ const LoginPage = () => {
                         value={password} 
                     />
                     {renderErrorMessage('password')}
-
-                    {errors.map(err => {
-                        if(err.name === 'user' && err.status) {
-                            return <div className="text-end text-red-600 font-bold" key={err.name}>{err.message}</div>
-                        }
-                        return null
-                    })}
-                    <button disabled={loading} onClick={handleLogin} className={`mt-5 px-2 py-3 font-bold rounded-md hover:bg-green-700 ${loading ? 'bg-green-200' : 'bg-green-500'}`}>
+                    {renderErrorMessage('user')}
+                    <button disabled={loading || errorsPresent() || inputsEmpty()} onClick={handleLogin} className={`mt-5 px-2 py-3 font-bold rounded-md hover:bg-green-700 disabled:bg-green-200 ${loading ? 'bg-green-200' : 'bg-green-500'}`}>
                         {loading ? 'Logging in...': 'Login'}
                     </button>
                 </form>
