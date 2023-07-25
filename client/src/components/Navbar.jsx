@@ -6,7 +6,7 @@ import PostAddIcon from '@mui/icons-material/PostAdd';
 import OverlayMenu from "./OverlayMenu";
 
 
-const Navbar = (props) => {
+const Navbar = () => {
 
   const [username, setUsername] = useState(null)
   const [showMenu, setShowMenu] = useState(false)
