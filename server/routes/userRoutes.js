@@ -1,5 +1,5 @@
 import express from 'express'
-import { addPostToLikes, getUserByEmail, getUserByUsername, getUserSelf } from '../controllers/userController.js'
+import { addPostToLikes, getUserByEmail, getUserByUsername, getUserSelf, removePostFromLikes } from '../controllers/userController.js'
 import { verifyUser } from '../utils/verifyToken.js'
 
 const userRouter = express.Router()
@@ -12,5 +12,7 @@ userRouter.get('/userByUsername/:username', getUserByUsername)
 userRouter.get('/userByEmail/:email', getUserByEmail)
 // PUT - Add Post to Likes
 userRouter.put('/user/addPostToLikes', addPostToLikes)
+// PUT - Remove Post from Likes
+userRouter.put('/user/removePostFromLikes', removePostFromLikes)
 
 export default userRouter
