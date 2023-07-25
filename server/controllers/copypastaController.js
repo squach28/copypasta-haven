@@ -45,7 +45,7 @@ export const incrementCopypastaLikes = async (req, res) => {
         },
         { $inc: { 'likes': 1}},
         { new: true})
-        res.status(201).json(copypasta)
+        res.status(200).json(copypasta)
     } catch(err) {
         console.log(err)
     }
@@ -58,7 +58,7 @@ export const decrementCopypastaLikes = async (req, res) => {
         },
         { $inc: { 'likes': -1}},
         { new: true})
-        res.status(201).json(copypasta)
+        res.status(200).json(copypasta)
     } catch(err) {
         console.log(err)
     }
