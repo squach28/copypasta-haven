@@ -37,3 +37,18 @@ export const getRandomCopypasta = async (req, res) => {
         console.log(err)
     }
 }
+
+export const incrementCopypastaLikes = async (req, res) => {
+    try {
+        console.log(req.query.id)
+        const copypasta = await Copypasta.findOneAndUpdate({
+            _id: req.params.id
+        },
+        { $inc: { 'likes': 1}},
+        { new: true})
+        console.log(copypasta)
+        res.status(201).json(copypasta)
+    } catch(err) {
+        console.log(err)
+    }
+}
