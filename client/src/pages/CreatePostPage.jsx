@@ -63,6 +63,10 @@ const CreatePostPage = () => {
                 navigate('/')
             }
         })
+        .catch(err => {
+            console.log(err)
+            setLoading(false)
+        })
     }
 
     const renderErrorMessage = (errorName) => {

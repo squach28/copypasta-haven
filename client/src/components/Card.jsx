@@ -3,12 +3,26 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 const Card = (props) => {
+
+  const handleLike = () => {
+    // update on user 
+    // update on table
+  }
+
+  const handleDislike = () => {
+
+  }
+
   return (
-    <div className="flex pl-0 my-3 shadow-md w-full bg-white py-2">
+    <div className="flex pl-0 my-3 shadow-md w-full md:w-1/2 md:mx-auto bg-white py-2">
         <div className="flex flex-col items-center ml-3">
-            <ThumbUpIcon />
+            <div className="cursor-pointer" onClick={handleLike}>
+              <ThumbUpIcon />
+            </div>
             {props.likes - props.dislikes}
-            <ThumbDownIcon />
+            <div className="cursor-pointer" onClick={handleDislike}>
+              <ThumbDownIcon />
+            </div>
         </div>
         <div className="flex flex-col ml-3 pr-5">
             <span className="text-xl font-bold">{props.title}</span>
