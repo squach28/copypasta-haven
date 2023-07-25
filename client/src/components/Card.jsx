@@ -8,7 +8,7 @@ const Card = (props) => {
     // update on user 
     // update on table
     fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${props._id}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       }
@@ -18,7 +18,14 @@ const Card = (props) => {
   }
 
   const handleDislike = () => {
-
+    fetch(`http://localhost:8080/api/copypasta/decrementCopypastaLikes/${props._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
   }
 
   return (
