@@ -51,7 +51,7 @@ export const addPostToLikes = async (req, res) => {
     try {
         const user = await User.findOneAndUpdate({
             _id: req.query.userId,
-        }, { $push: { likes: req.query.postId }})
+        }, { $addToSet: { likes: req.query.postId }})
         res.status(200).json({ success: true, message: 'Post was added to likes'})
     } catch(err) {
         console.log(err)
