@@ -6,8 +6,6 @@ import Cookies from 'js-cookie';
 const Card = (props) => {
 
   const handleLike = () => {
-    // update on user 
-    // update on table
     fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${props._id}`, {
       method: 'PUT',
       headers: {
@@ -40,7 +38,7 @@ const Card = (props) => {
 
   return (
     <div className="flex pl-0 my-3 shadow-md w-full md:w-1/2 md:mx-auto bg-white py-2">
-        <div className="flex flex-col items-center ml-3">
+        <div className={`flex flex-col items-center ml-3`}>
             <div className="cursor-pointer" onClick={handleLike}>
               <ThumbUpIcon />
             </div>

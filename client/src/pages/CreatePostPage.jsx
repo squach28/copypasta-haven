@@ -92,7 +92,7 @@ const CreatePostPage = () => {
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full h-screen bg-slate-200">
             <Navbar />
             <div className={`flex flex-col m-10 md:w-1/2 md:mx-auto ${loading ? '' : ''}`}>
                 <h1 className="text-3xl">Post Your Copypasta</h1>
