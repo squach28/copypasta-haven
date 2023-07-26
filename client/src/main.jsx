@@ -5,6 +5,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RegisterPage from './pages/RegisterPage.jsx'
 import CreatePostPage from './pages/CreatePostPage.jsx'
+import LikesPage from './pages/LikesPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: '/createPost',
     element: <CreatePostPage />
+  },
+  {
+    path: '/:id/likes',
+    element: <LikesPage />
   }
 ])
 

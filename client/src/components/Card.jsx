@@ -12,7 +12,7 @@ const Card = (props) => {
       navigate('/login')
       return
     }
-    fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${props._id}`, {
+    const incrementCopypastaLikes = fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${props._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ const Card = (props) => {
     .then(res => res.json())
     .then(data => console.log(data))
 
-    fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
+    const addPostToUserLikes = fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -29,7 +29,15 @@ const Card = (props) => {
     })
     .then(res => res.json())
     .then(data => console.log(data))
+    
+    Promise.all([
+      incrementCopypastaLikes,
+      addPostToUserLikes
+    ])
+    
   }
+
+
 
   const handleDislike = () => {
     if(Cookies.get('user_id') === undefined) {

@@ -1,5 +1,5 @@
 import Cookies from "js-cookie"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const OverlayMenu = () => {
 
@@ -17,7 +17,7 @@ const OverlayMenu = () => {
             <nav>
                 <ul className="flex flex-col gap-2 items-center font-bold p-2 hover:cursor-pointer">
                     <li>{Cookies.get('user_id')}</li>
-                    <li>Your Likes</li>
+                    <li><Link to={`/${Cookies.get('user_id')}/likes`}>Your Likes</Link></li>
                     <li onClick={logout}>Logout</li>
                 </ul>
             </nav>
