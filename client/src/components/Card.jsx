@@ -7,11 +7,11 @@ import { useState, useEffect } from 'react';
 import { addCopypastaToUserDislikes, addCopypastaToUserLikes, decrementCopypastaLikes, getUsernameForCopypasta, incrementCopypastaLikes, isCopypastaDislikedByUser, isCopypastaLikedByUser, removeCopypastaFromUserDislikes, removeCopypastaFromUserLikes } from '../api/copypasta';
 
 const Card = (props) => {
-
   const [author, setAuthor] = useState(null)
   const [liked, setLiked] = useState(false)
   const [disliked, setDisliked] = useState(false)
   const [likes, setLikes] = useState(props.likes)
+  const createdAt = new Date(props.createdAt)
 
   useEffect(() => {
     getUsernameForCopypasta(props.author)
@@ -127,7 +127,7 @@ const Card = (props) => {
             </div>
         </div>
         <div className="flex flex-col ml-3 pr-5">
-            <div className="text-gray-500">{author}</div>
+            <div className="text-gray-500">{author} - {createdAt.getMonth()}/{createdAt.getDate()}/{createdAt.getFullYear()}</div>
             <span className="text-xl font-bold">{props.title}</span>
             <div>
                 {props.content}
