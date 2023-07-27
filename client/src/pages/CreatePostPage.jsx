@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar"
 import { useNavigate } from "react-router-dom"
 import { postReducer } from "../reducers/PostReducer"
 import ErrorIcon from '@mui/icons-material/Error'
+import Cookies from "js-cookie"
 
 const CreatePostPage = () => {
     const [title, setTitle] = useState('')
@@ -47,7 +48,8 @@ const CreatePostPage = () => {
         setLoading(true)
         const post = {
             title: title,
-            content: content
+            content: content,
+            author: Cookies.get('user_id')
         }
         fetch('http://localhost:8080/api/copypasta', {
             method: 'POST',
