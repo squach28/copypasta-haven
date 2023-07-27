@@ -111,7 +111,8 @@ const CreatePostPage = () => {
                     <label className="text-lg font-bold" htmlFor="content">Content</label>
                     <textarea
                         rows="13"
-                        className="border-2 resize-none p-1" 
+                        wrap="hard"
+                        className="border-2 resize-none p-1 whitespace-pre-line" 
                         placeholder="Your Super Duper Cool Copypasta"
                         onChange={handleContentChange}
                      />

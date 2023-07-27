@@ -125,7 +125,7 @@ const Card = (props) => {
 
   }
 
-
+// content goes off screen
   return (
     <div className="flex pl-0 my-3 shadow-md w-full md:w-1/2 md:mx-auto bg-white py-2">
         <div className={`flex flex-col items-center ml-3`}>
@@ -137,7 +137,7 @@ const Card = (props) => {
               <ThumbDownIcon />
             </div>
         </div>
-        <div className="flex flex-col ml-3 pr-5">
+        <div className="flex flex-col ml-3 pr-5 flex-wrap overflow-x-auto">
             <div className="flex justify-between">
               <div className="text-gray-500">{author} - {createdAt.getMonth()}/{createdAt.getDate()}/{createdAt.getFullYear()}</div>
               <div className="cursor-pointer" onClick={copyToClipboard}>
@@ -145,7 +145,8 @@ const Card = (props) => {
               </div>
             </div>
             <span className="text-xl font-bold">{props.title}</span>
-            <div>
+            
+            <div className="break-words text-ellipsis max-w-max">
                 {props.content}
             </div>
         </div>
