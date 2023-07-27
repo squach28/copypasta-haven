@@ -3,8 +3,18 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const Card = (props) => {
+
+  const [author, setAuthor] = useState(null)
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/users/user/username/${props.author}`)
+      .then(res => res.json())
+      .then(data => setAuthor(data))
+  
+  }, [])
   const navigate = useNavigate()
 
   const handleLike = () => {
@@ -77,7 +87,7 @@ const Card = (props) => {
             </div>
         </div>
         <div className="flex flex-col ml-3 pr-5">
-          <div>{props.author}</div>
+            <div className="text-gray-500">{author}</div>
             <span className="text-xl font-bold">{props.title}</span>
             <div>
                 {props.content}
