@@ -33,9 +33,13 @@ const Card = (props) => {
     const addCopypasta = addCopypastaToUserLikes(Cookies.get('user_id'), props._id)
       .then(data => setLiked(data.success))
 
+    const removeCopypasta  = removeCopypastaFromUserDislikes(Cookies.get('user_id'), props._id)
+      .then(data => setDisliked(!data.success))
+
     Promise.all([
       incrementLikes,
-      addCopypasta
+      addCopypasta,
+      removeCopypasta
     ])
   }
 
@@ -44,6 +48,7 @@ const Card = (props) => {
       .then(data => setLikes(data.likes))
     const removeCopypasta  = removeCopypastaFromUserLikes(Cookies.get('user_id'), props._id)
       .then(data => setLiked(!data.success))
+
     Promise.all([
       decrementLikes,
       removeCopypasta
@@ -57,9 +62,13 @@ const Card = (props) => {
     const addCopypasta = addCopypastaToUserDislikes(Cookies.get('user_id'), props._id)
       .then(data => setDisliked(data.success))
 
+    const removeCopypasta  = removeCopypastaFromUserLikes(Cookies.get('user_id'), props._id)
+      .then(data => setLiked(!data.success))
+
     Promise.all([
       decrementLikes,
-      addCopypasta
+      addCopypasta,
+      removeCopypasta
     ])
   }
 
@@ -81,7 +90,6 @@ const Card = (props) => {
       navigate('/login')
       return
     }
-    // TODO: add new function undo like (Functionality is messing around with likes/dislikes arrays)
     const isPostInUserLikes = await fetch(`http://localhost:8080/api/users/user/like?userId=${Cookies.get('user_id')}&postId=${props._id}`)
       .then(res => res.json())
     if(isPostInUserLikes.success) {
@@ -91,13 +99,12 @@ const Card = (props) => {
     }
   }
 
-  // TODO: add array for user's dislikes
   const handleDislike = async () => {
     if(Cookies.get('user_id') === undefined) {
       navigate('/login')
       return
     }
-    // TODO: add new function undo like (Functionality is messing around with likes/dislikes arrays)
+
     const isPostInUserDislikes = await fetch(`http://localhost:8080/api/users/user/dislike?userId=${Cookies.get('user_id')}&postId=${props._id}`)
       .then(res => res.json())
     if(isPostInUserDislikes.success) {
