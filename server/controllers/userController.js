@@ -59,9 +59,19 @@ export const addPostToLikes = async (req, res) => {
     }
 }
 
+export const addPostToDislikes = async (req, res) => {
+    try {
+        const user = await User.findOneAndUpdate({
+            _id: req.query.userId,
+        }, { $addToSet: { dislikes: req.query.postId }})
+        res.status(200).json({ success: true, message: 'Post was added to dislikes'})
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 export const removePostFromLikes = async (req, res) => {
     try {
-        console.log('hi')
         await User.findOneAndUpdate({
             _id: req.query.userId,
         }, { $pull: { likes: req.query.postId }})
@@ -118,6 +128,23 @@ export const getLikeById = async (req, res) => {
             res.status(404).json({ success: false, message: `Post was not found in user's likes`})
         } else {
             res.status(200).json({ success: true, message: `Post was found in user's likes`})
+        }
+
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+export const getDislikeById = async (req, res) => {
+    try {
+        const likedPost = await User.find({
+            _id: req.query.userId,
+            dislikes: req.query.postId
+        })
+        if(likedPost.length === 0) {
+            res.status(404).json({ success: false, message: `Post was not found in user's dislikes`})
+        } else {
+            res.status(200).json({ success: true, message: `Post was found in user's dislikes`})
         }
 
     } catch(err) {

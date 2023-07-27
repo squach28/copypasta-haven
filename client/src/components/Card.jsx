@@ -4,52 +4,40 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { addCopypastaToUserLikes, getUsernameForCopypasta, incrementCopypastaLikes, isCopypastaDislikedByUser, isCopypastaLikedByUser } from '../api/copypasta';
 
 const Card = (props) => {
 
   const [author, setAuthor] = useState(null)
   const [liked, setLiked] = useState(false)
+  const [disliked, setDisliked] = useState(false)
   const [likes, setLikes] = useState(props.likes)
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/users/user/username/${props.author}`)
-      .then(res => res.json())
+    getUsernameForCopypasta(props.author)
       .then(data => setAuthor(data))
 
-    fetch(`http://localhost:8080/api/users/user/like?userId=${Cookies.get('user_id')}&postId=${props._id}`)
-      .then(res => res.json())
+    isCopypastaLikedByUser(Cookies.get('user_id'), props._id)
       .then(data => setLiked(data.success))
-      .catch(err => console.log(err))
+
+    isCopypastaDislikedByUser(Cookies.get('user_id'), props._id)
+      .then(data => setDisliked(data.success))
   
   }, [])
   const navigate = useNavigate()
 
   const likeCopypasta = () => {
-    const incrementCopypastaLikes = fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${props._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    })
-      .then(res => res.json())
+
+    const incrementLikes = incrementCopypastaLikes(props._id)
       .then(data => setLikes(data.likes))
-  
-    const addPostToUserLikes = fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    })
-      .then(res => res.json())
+
+    const addCopypasta = addCopypastaToUserLikes(Cookies.get('user_id'), props._id)
       .then(data => setLiked(data.success))
 
     Promise.all([
-      incrementCopypastaLikes,
-      addPostToUserLikes
+      incrementLikes,
+      addCopypasta
     ])
-    
   }
 
   const dislikeCopypasta = () => {
@@ -75,9 +63,20 @@ const Card = (props) => {
       .then(res => res.json())
       .then(data => setLiked(!data.success))
 
+      const addPostToUserDislikes = fetch(`http://localhost:8080/api/users/user/addPostToDislikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+        .then(res => res.json())
+        .then(data => setDisliked(data.success))
+
     Promise.all([
       decrementCopypastaLikes,
-      removePostFromLikes
+      removePostFromLikes,
+      addPostToUserDislikes
     ])
 
   }
@@ -87,7 +86,7 @@ const Card = (props) => {
       navigate('/login')
       return
     }
-
+    // TODO: add new function undo like (Functionality is messing around with likes/dislikes arrays)
     const isPostInUserLikes = await fetch(`http://localhost:8080/api/users/user/like?userId=${Cookies.get('user_id')}&postId=${props._id}`)
       .then(res => res.json())
     if(isPostInUserLikes.success) {
@@ -103,8 +102,10 @@ const Card = (props) => {
       navigate('/login')
       return
     }
-    const isPostInUserLikes = await fetch(`http://localhost:8080/api/users/user/like?userId=${Cookies.get('user_id')}&postId=${props._id}`)
-    if(isPostInUserLikes.success) {
+    // TODO: add new function undo like (Functionality is messing around with likes/dislikes arrays)
+    const isPostInUserDislikes = await fetch(`http://localhost:8080/api/users/user/dislike?userId=${Cookies.get('user_id')}&postId=${props._id}`)
+      .then(res => res.json())
+    if(isPostInUserDislikes.success) {
       likeCopypasta()
     } else {
       dislikeCopypasta()
@@ -119,7 +120,7 @@ const Card = (props) => {
               <ThumbUpIcon />
             </div>
             {likes}
-            <div className="cursor-pointer" onClick={handleDislike}>
+            <div className={`cursor-pointer ${disliked ? 'text-red-700' : 'text-black'}`} onClick={handleDislike}>
               <ThumbDownIcon />
             </div>
         </div>
