@@ -17,10 +17,6 @@ const copypastaSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    dislikes: {
-        type: Number,
-        default: 0
-    }
 }, { timestamps: true })
 
 export default mongoose.model("Copypasta", copypastaSchema)
