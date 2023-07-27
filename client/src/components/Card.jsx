@@ -8,11 +8,17 @@ import { useState, useEffect } from 'react';
 const Card = (props) => {
 
   const [author, setAuthor] = useState(null)
+  const [liked, setLiked] = useState(false)
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/users/user/username/${props.author}`)
       .then(res => res.json())
       .then(data => setAuthor(data))
+
+    fetch(`http://localhost:8080/api/users/user/like?userId=${Cookies.get('user_id')}&postId=${props._id}`)
+      .then(res => res.json())
+      .then(data => setLiked(data.success))
+      .catch(err => console.log(err))
   
   }, [])
   const navigate = useNavigate()
@@ -98,7 +104,7 @@ const Card = (props) => {
   return (
     <div className="flex pl-0 my-3 shadow-md w-full md:w-1/2 md:mx-auto bg-white py-2">
         <div className={`flex flex-col items-center ml-3`}>
-            <div className="cursor-pointer" onClick={handleLike}>
+            <div className={`cursor-pointer ${liked ? 'text-green-700' : 'text-black'}`} onClick={handleLike}>
               <ThumbUpIcon />
             </div>
             {props.likes - props.dislikes}

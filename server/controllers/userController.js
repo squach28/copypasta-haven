@@ -113,6 +113,7 @@ export const getLikeById = async (req, res) => {
             _id: req.query.userId,
             likes: req.query.postId
         })
+        console.log(likedPost)
         if(likedPost.length === 0) {
             res.status(404).json({ success: false, message: `Post was not found in user's likes`})
         } else {
