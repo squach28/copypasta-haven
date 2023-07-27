@@ -5,12 +5,14 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { addCopypastaToUserDislikes, addCopypastaToUserLikes, decrementCopypastaLikes, getUsernameForCopypasta, incrementCopypastaLikes, isCopypastaDislikedByUser, isCopypastaLikedByUser, removeCopypastaFromUserDislikes, removeCopypastaFromUserLikes } from '../api/copypasta';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const Card = (props) => {
   const [author, setAuthor] = useState(null)
   const [liked, setLiked] = useState(false)
   const [disliked, setDisliked] = useState(false)
   const [likes, setLikes] = useState(props.likes)
+  const [copied, setCopied] = useState(false)
   const createdAt = new Date(props.createdAt)
 
   useEffect(() => {
@@ -114,6 +116,15 @@ const Card = (props) => {
     }
   }
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(props.content)
+    setCopied(true)
+    setTimeout(() => {
+      setCopied(false)
+    }, 2000)
+
+  }
+
 
   return (
     <div className="flex pl-0 my-3 shadow-md w-full md:w-1/2 md:mx-auto bg-white py-2">
@@ -127,7 +138,12 @@ const Card = (props) => {
             </div>
         </div>
         <div className="flex flex-col ml-3 pr-5">
-            <div className="text-gray-500">{author} - {createdAt.getMonth()}/{createdAt.getDate()}/{createdAt.getFullYear()}</div>
+            <div className="flex justify-between">
+              <div className="text-gray-500">{author} - {createdAt.getMonth()}/{createdAt.getDate()}/{createdAt.getFullYear()}</div>
+              <div className="cursor-pointer" onClick={copyToClipboard}>
+                {copied ? <p>Copied!</p> : <ContentCopyIcon />}
+              </div>
+            </div>
             <span className="text-xl font-bold">{props.title}</span>
             <div>
                 {props.content}
