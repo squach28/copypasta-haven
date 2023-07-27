@@ -63,3 +63,20 @@ export const decrementCopypastaLikes = async (req, res) => {
         console.log(err)
     }
 }
+
+export const getNumberOfLikes = async (req, res) => {
+    try {
+        const copypasta = await Copypasta.findOne({
+            _id: req.params.id
+        })
+
+        if(!copypasta) {
+            res.status(404).json( { success: false, message: `Copypasta with ID ${req.params.id} wasn't found`})
+        } else {
+            const { likes } = copypasta 
+            res.status(200).json({ success: true, likes: likes })
+        }
+    } catch(err) {
+        console.log(err)
+    }
+}

@@ -1,5 +1,5 @@
 import express from 'express'
-import { addCopypasta, decrementCopypastaLikes, getAllCopypastas, getCopypastaById, getRandomCopypasta, incrementCopypastaLikes } from '../controllers/copypastaController.js'
+import { addCopypasta, decrementCopypastaLikes, getAllCopypastas, getCopypastaById, getNumberOfLikes, getRandomCopypasta, incrementCopypastaLikes } from '../controllers/copypastaController.js'
 import { verifyUser } from '../utils/verifyToken.js'
 
 const router = express.Router()
@@ -16,6 +16,7 @@ router.get('/randomCopypasta', getRandomCopypasta)
 router.put('/incrementCopypastaLikes/:id', verifyUser, incrementCopypastaLikes)
 // POST - Decrement Likes
 router.put('/decrementCopypastaLikes/:id', verifyUser, decrementCopypastaLikes)
-
+// GET - Number of Likes for Post with ID
+router.get('/likes/:id', getNumberOfLikes)
 
 export default router 

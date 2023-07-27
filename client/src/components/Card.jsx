@@ -9,6 +9,7 @@ const Card = (props) => {
 
   const [author, setAuthor] = useState(null)
   const [liked, setLiked] = useState(false)
+  const [likes, setLikes] = useState(props.likes)
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/users/user/username/${props.author}`)
@@ -31,6 +32,8 @@ const Card = (props) => {
       },
       credentials: 'include'
     })
+      .then(res => res.json())
+      .then(data => setLikes(data.likes))
   
     const addPostToUserLikes = fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
       method: 'PUT',
@@ -39,11 +42,14 @@ const Card = (props) => {
       },
       credentials: 'include'
     })
+      .then(res => res.json())
+      .then(data => setLiked(data.success))
 
     Promise.all([
       incrementCopypastaLikes,
       addPostToUserLikes
     ])
+    
   }
 
   const dislikeCopypasta = () => {
@@ -54,6 +60,10 @@ const Card = (props) => {
       },
       credentials: 'include'
     })
+    .then(res => res.json())
+    .then(data => {
+      setLikes(data.likes)
+    })
   
     const removePostFromLikes = fetch(`http://localhost:8080/api/users/user/removePostFromLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
       method: 'PUT',
@@ -62,12 +72,13 @@ const Card = (props) => {
       },
       credentials: 'include'
     })
+      .then(res => res.json())
+      .then(data => setLiked(!data.success))
 
     Promise.all([
       decrementCopypastaLikes,
       removePostFromLikes
     ])
-    .then(() => console.log('promise all completed'))
 
   }
 
@@ -107,7 +118,7 @@ const Card = (props) => {
             <div className={`cursor-pointer ${liked ? 'text-green-700' : 'text-black'}`} onClick={handleLike}>
               <ThumbUpIcon />
             </div>
-            {props.likes - props.dislikes}
+            {likes}
             <div className="cursor-pointer" onClick={handleDislike}>
               <ThumbDownIcon />
             </div>
