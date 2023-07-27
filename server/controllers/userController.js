@@ -72,7 +72,7 @@ export const removePostFromLikes = async (req, res) => {
 export const getUserLikedPosts = async (req, res) => {
     try {
         const user = await User.findOne({
-            _id: req.query.userId
+            _id: req.params.userId
         })
         if(!user) {
             res.status(404).json({ success: false, message: 'User not found'})
@@ -83,5 +83,23 @@ export const getUserLikedPosts = async (req, res) => {
         res.status(200).json(likes)
     } catch(err) {
         console.log(err)
+    }
+}
+
+export const getUsernameById = async (req, res) => {
+    try {
+        const user = await User.findOne({
+            _id: req.params.id
+        })
+
+        if(!user) {
+            res.status(404).json({ success: false, message: 'User was not found'})
+        }
+
+        const { username } = user
+
+        res.status(200).json(username)
+    } catch(err) {
+        console.log(err) 
     }
 }

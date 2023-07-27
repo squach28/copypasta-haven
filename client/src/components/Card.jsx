@@ -77,6 +77,7 @@ const Card = (props) => {
             </div>
         </div>
         <div className="flex flex-col ml-3 pr-5">
+          <div>{props.author}</div>
             <span className="text-xl font-bold">{props.title}</span>
             <div>
                 {props.content}
