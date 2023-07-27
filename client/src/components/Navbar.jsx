@@ -54,7 +54,7 @@ const Navbar = () => {
                 </li>}
           </ul>
       </div>
-      {showMenu ? <OverlayMenu /> : null}
+      {showMenu ? <OverlayMenu username={username} /> : null}
     </div>
   )
 }
