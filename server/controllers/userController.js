@@ -103,3 +103,20 @@ export const getUsernameById = async (req, res) => {
         console.log(err) 
     }
 }
+
+export const getLikeById = async (req, res) => {
+    try {
+        const likedPost = await User.find({
+            _id: req.query.userId,
+            likes: req.query.postId
+        })
+        if(likedPost.length === 0) {
+            res.status(404).json({ success: false, message: `Post was not found in user's likes`})
+        } else {
+            res.status(200).json({ sucecss: true, message: `Post was found in user's likes`})
+        }
+
+    } catch(err) {
+        console.log(err)
+    }
+}
