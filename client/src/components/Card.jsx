@@ -17,11 +17,7 @@ const Card = (props) => {
   }, [])
   const navigate = useNavigate()
 
-  const handleLike = () => {
-    if(Cookies.get('user_id') === undefined) {
-      navigate('/login')
-      return
-    }
+  const likeCopypasta = () => {
     const incrementCopypastaLikes = fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${props._id}`, {
       method: 'PUT',
       headers: {
@@ -29,7 +25,7 @@ const Card = (props) => {
       },
       credentials: 'include'
     })
-
+  
     const addPostToUserLikes = fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
       method: 'PUT',
       headers: {
@@ -42,16 +38,9 @@ const Card = (props) => {
       incrementCopypastaLikes,
       addPostToUserLikes
     ])
-    
   }
 
-
-
-  const handleDislike = () => {
-    if(Cookies.get('user_id') === undefined) {
-      navigate('/login')
-      return
-    }
+  const dislikeCopypasta = () => {
     const decrementCopypastaLikes = fetch(`http://localhost:8080/api/copypasta/decrementCopypastaLikes/${props._id}`, {
       method: 'PUT',
       headers: {
@@ -59,8 +48,8 @@ const Card = (props) => {
       },
       credentials: 'include'
     })
-
-    const removePostFromLikes = fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
+  
+    const removePostFromLikes = fetch(`http://localhost:8080/api/users/user/removePostFromLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -72,6 +61,37 @@ const Card = (props) => {
       decrementCopypastaLikes,
       removePostFromLikes
     ])
+    .then(() => console.log('promise all completed'))
+
+  }
+
+  const handleLike = async () => {
+    if(Cookies.get('user_id') === undefined) {
+      navigate('/login')
+      return
+    }
+
+    const isPostInUserLikes = await fetch(`http://localhost:8080/api/users/user/like?userId=${Cookies.get('user_id')}&postId=${props._id}`)
+      .then(res => res.json())
+    if(isPostInUserLikes.success) {
+      dislikeCopypasta()
+    } else {
+      likeCopypasta()
+    }
+  }
+
+  // TODO: add array for user's dislikes
+  const handleDislike = async () => {
+    if(Cookies.get('user_id') === undefined) {
+      navigate('/login')
+      return
+    }
+    const isPostInUserLikes = await fetch(`http://localhost:8080/api/users/user/like?userId=${Cookies.get('user_id')}&postId=${props._id}`)
+    if(isPostInUserLikes.success) {
+      likeCopypasta()
+    } else {
+      dislikeCopypasta()
+    }
   }
 
 

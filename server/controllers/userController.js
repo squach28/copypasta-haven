@@ -49,6 +49,7 @@ export const getUserByEmail = async (req, res) => {
 
 export const addPostToLikes = async (req, res) => {
     try {
+        console.log('added post to likes!')
         const user = await User.findOneAndUpdate({
             _id: req.query.userId,
         }, { $addToSet: { likes: req.query.postId }})
@@ -60,6 +61,7 @@ export const addPostToLikes = async (req, res) => {
 
 export const removePostFromLikes = async (req, res) => {
     try {
+        console.log('hi')
         await User.findOneAndUpdate({
             _id: req.query.userId,
         }, { $pull: { likes: req.query.postId }})
@@ -94,11 +96,12 @@ export const getUsernameById = async (req, res) => {
 
         if(!user) {
             res.status(404).json({ success: false, message: 'User was not found'})
+        } else {
+            const { username } = user
+
+            res.status(200).json(username)
         }
 
-        const { username } = user
-
-        res.status(200).json(username)
     } catch(err) {
         console.log(err) 
     }
@@ -113,7 +116,7 @@ export const getLikeById = async (req, res) => {
         if(likedPost.length === 0) {
             res.status(404).json({ success: false, message: `Post was not found in user's likes`})
         } else {
-            res.status(200).json({ sucecss: true, message: `Post was found in user's likes`})
+            res.status(200).json({ success: true, message: `Post was found in user's likes`})
         }
 
     } catch(err) {
