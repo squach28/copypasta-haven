@@ -4,7 +4,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { addCopypastaToUserLikes, getUsernameForCopypasta, incrementCopypastaLikes, isCopypastaDislikedByUser, isCopypastaLikedByUser } from '../api/copypasta';
+import { addCopypastaToUserLikes, decrementCopypastaLikes, getUsernameForCopypasta, incrementCopypastaLikes, isCopypastaDislikedByUser, isCopypastaLikedByUser, removeCopypastaFromUserLikes } from '../api/copypasta';
 
 const Card = (props) => {
 
@@ -27,7 +27,6 @@ const Card = (props) => {
   const navigate = useNavigate()
 
   const likeCopypasta = () => {
-
     const incrementLikes = incrementCopypastaLikes(props._id)
       .then(data => setLikes(data.likes))
 
@@ -37,6 +36,17 @@ const Card = (props) => {
     Promise.all([
       incrementLikes,
       addCopypasta
+    ])
+  }
+
+  const undoLikeCopypasta = () => {
+    const decrementLikes = decrementCopypastaLikes(props._id)
+      .then(data => setLikes(data.likes))
+    const removeCopypasta  = removeCopypastaFromUserLikes(Cookies.get('user_id'), props._id)
+      .then(data => setLiked(!data.success))
+    Promise.all([
+      decrementLikes,
+      removeCopypasta
     ])
   }
 
@@ -52,6 +62,9 @@ const Card = (props) => {
     .then(data => {
       setLikes(data.likes)
     })
+
+    const decrementLikes = decrementCopypastaLikes(props._id)
+      .then(data => setLikes(data.likes))
   
     const removePostFromLikes = fetch(`http://localhost:8080/api/users/user/removePostFromLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
       method: 'PUT',
@@ -90,7 +103,7 @@ const Card = (props) => {
     const isPostInUserLikes = await fetch(`http://localhost:8080/api/users/user/like?userId=${Cookies.get('user_id')}&postId=${props._id}`)
       .then(res => res.json())
     if(isPostInUserLikes.success) {
-      dislikeCopypasta()
+      undoLikeCopypasta()
     } else {
       likeCopypasta()
     }

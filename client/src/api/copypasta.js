@@ -42,3 +42,28 @@ export const incrementCopypastaLikes = async (postId) => {
     
     return res
 }
+
+export const removeCopypastaFromUserLikes = async (userId, postId) => {
+    const res = await fetch(`http://localhost:8080/api/users/user/removePostFromLikes?userId=${userId}&postId=${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+        .then(res => res.json())
+    return res 
+} 
+
+export const decrementCopypastaLikes = async (postId) => {
+    const res = await fetch(`http://localhost:8080/api/copypasta/decrementCopypastaLikes/${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+        .then(res => res.json())
+    
+    return res
+}
