@@ -13,9 +13,9 @@ router.post('/', verifyUser, addCopypasta)
 // GET - Random Copypasta
 router.get('/randomCopypasta', getRandomCopypasta)
 // POST - Increment Likes
-router.put('/incrementCopypastaLikes/:id', incrementCopypastaLikes)
+router.put('/incrementCopypastaLikes/:id', verifyUser, incrementCopypastaLikes)
 // POST - Decrement Likes
-router.put('/decrementCopypastaLikes/:id', decrementCopypastaLikes)
+router.put('/decrementCopypastaLikes/:id', verifyUser, decrementCopypastaLikes)
 
 
 export default router 

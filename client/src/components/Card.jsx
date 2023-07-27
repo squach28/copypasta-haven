@@ -16,20 +16,18 @@ const Card = (props) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     })
-    .then(res => res.json())
-    .then(data => console.log(data))
 
     const addPostToUserLikes = fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     })
-    .then(res => res.json())
-    .then(data => console.log(data))
-    
+
     Promise.all([
       incrementCopypastaLikes,
       addPostToUserLikes
@@ -44,15 +42,28 @@ const Card = (props) => {
       navigate('/login')
       return
     }
-    fetch(`http://localhost:8080/api/copypasta/decrementCopypastaLikes/${props._id}`, {
+    const decrementCopypastaLikes = fetch(`http://localhost:8080/api/copypasta/decrementCopypastaLikes/${props._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     })
-    .then(res => res.json())
-    .then(data => console.log(data))
+
+    const removePostFromLikes = fetch(`http://localhost:8080/api/users/user/addPostToLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+
+    Promise.all([
+      decrementCopypastaLikes,
+      removePostFromLikes
+    ])
   }
+
 
   return (
     <div className="flex pl-0 my-3 shadow-md w-full md:w-1/2 md:mx-auto bg-white py-2">

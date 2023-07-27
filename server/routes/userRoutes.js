@@ -11,9 +11,9 @@ userRouter.get('/userByUsername/:username', getUserByUsername)
 // GET - User by Email
 userRouter.get('/userByEmail/:email', getUserByEmail)
 // PUT - Add Post to Likes
-userRouter.put('/user/addPostToLikes', addPostToLikes)
+userRouter.put('/user/addPostToLikes', verifyUser, addPostToLikes)
 // PUT - Remove Post from Likes
-userRouter.put('/user/removePostFromLikes', removePostFromLikes)
+userRouter.put('/user/removePostFromLikes', verifyUser, removePostFromLikes)
 // GET - Get User Liked Posts
 userRouter.get('/user/:id/likes', getUserLikedPosts)
 

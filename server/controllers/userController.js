@@ -82,6 +82,6 @@ export const getUserLikedPosts = async (req, res) => {
 
         res.status(200).json(likes)
     } catch(err) {
-
+        console.log(err)
     }
 }
