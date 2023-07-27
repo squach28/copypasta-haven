@@ -4,7 +4,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { addCopypastaToUserLikes, decrementCopypastaLikes, getUsernameForCopypasta, incrementCopypastaLikes, isCopypastaDislikedByUser, isCopypastaLikedByUser, removeCopypastaFromUserLikes } from '../api/copypasta';
+import { addCopypastaToUserDislikes, addCopypastaToUserLikes, decrementCopypastaLikes, getUsernameForCopypasta, incrementCopypastaLikes, isCopypastaDislikedByUser, isCopypastaLikedByUser, removeCopypastaFromUserDislikes, removeCopypastaFromUserLikes } from '../api/copypasta';
 
 const Card = (props) => {
 
@@ -51,45 +51,27 @@ const Card = (props) => {
   }
 
   const dislikeCopypasta = () => {
-    const decrementCopypastaLikes = fetch(`http://localhost:8080/api/copypasta/decrementCopypastaLikes/${props._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    })
-    .then(res => res.json())
-    .then(data => {
-      setLikes(data.likes)
-    })
-
     const decrementLikes = decrementCopypastaLikes(props._id)
       .then(data => setLikes(data.likes))
-  
-    const removePostFromLikes = fetch(`http://localhost:8080/api/users/user/removePostFromLikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    })
-      .then(res => res.json())
-      .then(data => setLiked(!data.success))
 
-      const addPostToUserDislikes = fetch(`http://localhost:8080/api/users/user/addPostToDislikes?userId=${Cookies.get('user_id')}&postId=${props._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      })
-        .then(res => res.json())
-        .then(data => setDisliked(data.success))
+    const addCopypasta = addCopypastaToUserDislikes(Cookies.get('user_id'), props._id)
+      .then(data => setDisliked(data.success))
 
     Promise.all([
-      decrementCopypastaLikes,
-      removePostFromLikes,
-      addPostToUserDislikes
+      decrementLikes,
+      addCopypasta
+    ])
+  }
+
+  const undoDislikeCopypasta = () => {
+    const incrementLikes = incrementCopypastaLikes(props._id)
+      .then(data => setLikes(data.likes))
+    const removeCopypasta  = removeCopypastaFromUserDislikes(Cookies.get('user_id'), props._id)
+      .then(data => setDisliked(!data.success))
+  
+    Promise.all([
+      incrementLikes,
+      removeCopypasta
     ])
 
   }
@@ -119,7 +101,7 @@ const Card = (props) => {
     const isPostInUserDislikes = await fetch(`http://localhost:8080/api/users/user/dislike?userId=${Cookies.get('user_id')}&postId=${props._id}`)
       .then(res => res.json())
     if(isPostInUserDislikes.success) {
-      likeCopypasta()
+      undoDislikeCopypasta()
     } else {
       dislikeCopypasta()
     }

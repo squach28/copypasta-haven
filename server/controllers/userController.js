@@ -81,6 +81,17 @@ export const removePostFromLikes = async (req, res) => {
     }
 }
 
+export const removePostFromDislikes = async (req, res) => {
+    try {
+        await User.findOneAndUpdate({
+            _id: req.query.userId,
+        }, { $pull: { dislikes: req.query.postId }})
+        res.status(200).json({ success: true, message: 'Post was removed from dislikes'})
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 export const getUserLikedPosts = async (req, res) => {
     try {
         const user = await User.findOne({

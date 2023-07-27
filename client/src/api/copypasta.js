@@ -30,6 +30,18 @@ export const addCopypastaToUserLikes = async (userId, postId) => {
     return res 
 } 
 
+export const addCopypastaToUserDislikes = async (userId, postId) => {
+    const res = await fetch(`http://localhost:8080/api/users/user/addPostToDislikes?userId=${userId}&postId=${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+        .then(res => res.json())
+    return res 
+} 
+
 export const incrementCopypastaLikes = async (postId) => {
     const res = await fetch(`http://localhost:8080/api/copypasta/incrementCopypastaLikes/${postId}`, {
         method: 'PUT',
@@ -45,6 +57,18 @@ export const incrementCopypastaLikes = async (postId) => {
 
 export const removeCopypastaFromUserLikes = async (userId, postId) => {
     const res = await fetch(`http://localhost:8080/api/users/user/removePostFromLikes?userId=${userId}&postId=${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+        .then(res => res.json())
+    return res 
+} 
+
+export const removeCopypastaFromUserDislikes = async (userId, postId) => {
+    const res = await fetch(`http://localhost:8080/api/users/user/removePostFromDislikes?userId=${userId}&postId=${postId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
