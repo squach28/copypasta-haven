@@ -17,6 +17,9 @@ const userSchema = mongoose.Schema({
     },
     likes: {
         type: [String]
+    },
+    dislikes: {
+        type: [String]
     }
 }, { timestamps: true})
 
