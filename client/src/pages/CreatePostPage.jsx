@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { postReducer } from "../reducers/PostReducer"
 import ErrorIcon from '@mui/icons-material/Error'
 import Cookies from "js-cookie"
+import { addCopypasta } from "../api/copypasta"
 
 const CreatePostPage = () => {
     const [title, setTitle] = useState('')
@@ -51,24 +52,17 @@ const CreatePostPage = () => {
             content: content,
             author: Cookies.get('user_id')
         }
-        fetch('http://localhost:8080/api/copypasta', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify(post)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data) {
-                navigate('/')
-            }
-        })
-        .catch(err => {
-            console.log(err)
-            setLoading(false)
-        })
+
+        addCopypasta(post)
+            .then(data => {
+                if(data) {
+                    navigate('/')
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                setLoading(false)
+            })
     }
 
     const renderErrorMessage = (errorName) => {

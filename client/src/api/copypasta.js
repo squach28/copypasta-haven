@@ -99,3 +99,17 @@ export const getRandomCopypasta = async () => {
 
   return res
 }
+
+export const addCopypasta = async (post) => {
+  const res = await fetch('http://localhost:8080/api/copypasta', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: JSON.stringify(post)
+  })
+    .then(res => res.json())
+  
+  return res
+}
