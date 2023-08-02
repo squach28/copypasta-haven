@@ -129,6 +129,7 @@ export const getUsernameById = async (req, res) => {
 }
 
 export const getLikeById = async (req, res) => {
+
     try {
         const likedPost = await User.find({
             _id: req.query.userId,

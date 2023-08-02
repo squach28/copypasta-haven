@@ -16,7 +16,8 @@ const Card = (props) => {
   const createdAt = new Date(props.createdAt)
 
   useEffect(() => {
-    getUsernameForCopypasta(props.author)
+    if(Cookies.get('user_id')) {
+      getUsernameForCopypasta(props.author)
       .then(data => setAuthor(data))
 
     isCopypastaLikedByUser(Cookies.get('user_id'), props._id)
@@ -24,6 +25,8 @@ const Card = (props) => {
 
     isCopypastaDislikedByUser(Cookies.get('user_id'), props._id)
       .then(data => setDisliked(data.success))
+    }
+
   
   }, [])
   const navigate = useNavigate()
@@ -137,7 +140,7 @@ const Card = (props) => {
               <ThumbDownIcon />
             </div>
         </div>
-        <div className="flex flex-col ml-3 pr-5 flex-wrap flex-1">
+        <div className="flex flex-col ml-3 pr-5 flex-wrap flex-1  text-ellipsis">
             <div className="flex justify-between">
               <div className="text-gray-500">{author} - {createdAt.getMonth()}/{createdAt.getDate()}/{createdAt.getFullYear()}</div>
               <div className="cursor-pointer" onClick={copyToClipboard}>
@@ -146,7 +149,7 @@ const Card = (props) => {
             </div>
             <span className="text-xl font-bold">{props.title}</span>
             
-            <div className="">
+            <div className="w-full md:max-w-[768px] text-ellipsis overflow-hidden block">
                 {props.content}
             </div>
         </div>
