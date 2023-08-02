@@ -22,9 +22,9 @@ export const getUserByUsername = async (req, res) => {
             username: username
         })
         if(!user) {
-            res.status(200).json({ success: true })
+            res.status(200).json({ username: undefined, success: true })
         } else {
-            res.status(400).json({ success: false, message: 'Username is already taken' })
+            res.status(400).json({ success: true, username: username, message: `Username is already taken` })
         }
     } catch(err) {
         res.status(500).json({ success: false, message: 'Something went wrong. Try again later'})
@@ -38,9 +38,9 @@ export const getUserByEmail = async (req, res) => {
             email: email
         })
         if(!user) {
-            res.status(200).json({ success: true })
+            res.status(200).json({ email: undefined, success: true })
         } else {
-            res.status(400).json({ success: false, message: 'Email is already taken' })
+            res.status(400).json({ success: false, email: email, message: 'Email is already taken' })
         }
     } catch(err) {
         res.status(500).json({ success: false, message: 'Something went wrong. Try again later'})

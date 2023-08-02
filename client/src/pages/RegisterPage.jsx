@@ -4,6 +4,8 @@ import { registerReducer } from '../reducers/RegisterReducer'
 import validator from 'validator'
 import ErrorIcon from '@mui/icons-material/Error'
 import { getRandomCopypasta } from '../api/copypasta'
+import { register as registerUser } from '../api/auth'
+import { isEmailTaken, isUsernameTaken } from '../api/user'
 
 const RegisterPage = () => {
 
@@ -138,17 +140,11 @@ const RegisterPage = () => {
             password: password
         }
         
-        fetch('http://localhost:8080/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then(res => res.json())
-            .then(() => {
-                navigate('/')
-            
+        registerUser(user)
+            .then(data => {
+                if(data.success) {
+                    navigate('/')
+                }
             })
             .catch(err => console.log(err))
     }
@@ -160,27 +156,26 @@ const RegisterPage = () => {
     }
 
     const verifyUsernameTaken = (username) => {
-        fetch(`http://localhost:8080/api/users/userByUsername/${username}`)
-        .then(res => res.json())
-        .then(data => {
-            if(!data.success) {
-                dispatch({
-                    type: 'USERNAME_TAKEN',
-                })
-            }
-        })
+
+        isUsernameTaken(username)
+            .then(data => {
+                if(data.username) {
+                    dispatch({
+                        type: 'USERNAME_TAKEN'
+                    })
+                }
+            })
     }
 
     const verifyEmailTaken = (email) => {
-        fetch(`http://localhost:8080/api/users/userByEmail/${email}`)
-        .then(res => res.json())
-        .then(data => {
-            if(!data.success) {
-                dispatch({
-                    type: 'EMAIL_TAKEN',
-                })
-            }
-        })
+        isEmailTaken(email)
+            .then(data => {
+                if(data.email) {
+                    dispatch({
+                        type: 'EMAIL_TAKEN',
+                    })
+                }
+            })
     }
 
     const inputsEmpty = () => {

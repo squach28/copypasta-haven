@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { loginReducer } from "../reducers/LoginReducer"
 import ErrorIcon from '@mui/icons-material/Error'
 import { getRandomCopypasta } from "../api/copypasta"
+import { login as userLogin } from "../api/auth"
 
 const LoginPage = () => {
     const [username, setUsername] = useState('')
@@ -83,25 +84,18 @@ const LoginPage = () => {
             username: username,
             password: password
         }
-        fetch('http://localhost:8080/api/auth/login', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: 'include',
-            body: JSON.stringify(user)
-        })
-            .then(res => res.json())
+
+        userLogin(user)
             .then(data => {
-                if(!data.success) {
-                    dispatch({ 'type': 'USER', message: data.message})
-                } else {
-                    navigate('/')
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })
+            if(!data.success) {
+                dispatch({ 'type': 'USER', message: data.message})
+            } else {
+                navigate('/')
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     const errorsPresent = () => {
