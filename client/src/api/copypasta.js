@@ -91,3 +91,11 @@ export const decrementCopypastaLikes = async (postId) => {
     
     return res
 }
+
+export const getRandomCopypasta = async () => {
+  const res = await fetch('http://localhost:8080/api/copypasta/randomCopypasta')
+    .then(res => res.json())
+    .then(data => data[0])
+
+  return res
+}

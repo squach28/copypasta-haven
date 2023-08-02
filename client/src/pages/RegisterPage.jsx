@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { registerReducer } from '../reducers/RegisterReducer'
 import validator from 'validator'
 import ErrorIcon from '@mui/icons-material/Error'
+import { getRandomCopypasta } from '../api/copypasta'
 
 const RegisterPage = () => {
 
@@ -51,9 +52,10 @@ const RegisterPage = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/copypasta/randomCopypasta')
-            .then(res => res.json())
-            .then(data => setRandomCopypasta(data))
+        getRandomCopypasta()
+            .then(res => {
+                setRandomCopypasta(res)
+            })
 
         const focusListener = document.addEventListener('focusout', (e) => {
             const inputId = e.target.id
@@ -202,7 +204,7 @@ const RegisterPage = () => {
         <div className="flex w-screen h-full">
         <div className="w-[50%] h-screen bg-blue-200 hidden md:flex md:justify-center md:items-center">
             <div className="text-center m-10 text-xl animate-pulse">
-                {randomCopypasta ? <p>{randomCopypasta[0].title}</p> : 'Loading...'}
+                {randomCopypasta ? <p>{randomCopypasta.title}</p> : 'Loading...'}
             </div>
         </div>
         <div className="flex-1 h-screen flex flex-col px-10 justify-center md:max-w-lg mx-auto">
