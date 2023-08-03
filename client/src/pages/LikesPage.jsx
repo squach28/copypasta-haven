@@ -1,6 +1,13 @@
+import Navbar from "../components/Navbar"
+
 const LikesPage = () => {
   return (
-    <div>LikesPage</div>
+    <div>
+      <Navbar />
+      <div>
+        Your Likes
+      </div>
+    </div>
   )
 }
 

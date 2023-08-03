@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 import Navbar from "../components/Navbar"
 import { useNavigate } from "react-router-dom"
 import { postReducer } from "../reducers/PostReducer"
@@ -25,6 +25,20 @@ const CreatePostPage = () => {
 
     const [errors, dispatch] = useReducer(postReducer, initialErrors)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const hasUnsavedChanges = (e) => {
+            if(title !== '' || content !== '') {
+                e.preventDefault()
+                e.returnValue = ''
+            }
+        }   
+        window.addEventListener('beforeunload', hasUnsavedChanges)
+
+        return () => {
+            window.removeEventListener('beforeunload', hasUnsavedChanges)
+        }
+    }, [title, content])
 
     const handleTitleChange = (e) => {
         if(e.target.value === '') {
@@ -86,6 +100,8 @@ const CreatePostPage = () => {
     const inputsEmpty = () => {
         return title === '' || content === ''
     }
+
+
 
     return (
         <div className="w-full h-screen bg-slate-200">
