@@ -130,7 +130,7 @@ const Card = (props) => {
 
 // content goes off screen
   return (
-    <div className="flex pl-0 my-3 shadow-md w-full md:w-1/2 md:mx-auto bg-white py-2 whitespace-pre-wrap">
+    <div className="flex pl-0 my-3 shadow-md w-full md:max-w-[768px] md:mx-auto bg-white py-2 whitespace-pre-wrap text-ellipsis overflow-hidden">
         <div className={`flex flex-col items-center ml-3`}>
             <div className={`cursor-pointer ${liked ? 'text-green-700' : 'text-black'}`} onClick={handleLike}>
               <ThumbUpIcon />
@@ -149,7 +149,7 @@ const Card = (props) => {
             </div>
             <span className="text-xl font-bold">{props.title}</span>
             
-            <div className="w-full md:max-w-[768px] text-ellipsis overflow-hidden block">
+            <div className="w-full md:max-w-[768px] text-ellipsis">
                 {props.content}
             </div>
         </div>
