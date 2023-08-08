@@ -94,15 +94,17 @@ export const removePostFromDislikes = async (req, res) => {
 
 export const getUserLikedPosts = async (req, res) => {
     try {
+        console.log(req.params.id)
         const user = await User.findOne({
-            _id: req.params.userId
+            _id: req.params.id
         })
+        console.log(user)
         if(!user) {
             res.status(404).json({ success: false, message: 'User not found'})
         }
 
         const { likes } = user
-
+        console.log(likes)
         res.status(200).json(likes)
     } catch(err) {
         console.log(err)

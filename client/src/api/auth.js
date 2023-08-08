@@ -24,3 +24,4 @@ export const register = async (user) => {
 
     return res
 }
+

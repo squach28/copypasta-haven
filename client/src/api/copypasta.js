@@ -113,3 +113,9 @@ export const addCopypasta = async (post) => {
   
   return res
 }
+
+export const getCopypastaById = async (copypastaId) => {
+    const res = await fetch(`http://localhost:8080/api/copypasta/getById/${copypastaId}`)
+      .then(res => res.json())
+    return res
+}

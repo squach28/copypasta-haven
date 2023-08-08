@@ -17,7 +17,7 @@ const OverlayMenu = (props) => {
             <nav>
                 <ul className="flex flex-col gap-2 items-center font-bold p-2 hover:cursor-pointer">
                     <li>{props.username}</li>
-                    <li><Link to={`/${Cookies.get('user_id')}/likes`}>Your Likes</Link></li>
+                    <li><Link to={`/${Cookies.get('user_id')}/likes`}>My Likes</Link></li>
                     <li onClick={logout}>Logout</li>
                 </ul>
             </nav>
