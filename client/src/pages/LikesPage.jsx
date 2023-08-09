@@ -23,7 +23,7 @@ const LikesPage = () => {
     <div className="bg-slate-200">
       <Navbar />
       <div>
-        <h1 className="text-3xl">My Likes</h1>
+        <h1 className="text-3xl text-center p-2 m-4">My Likes</h1>
         {likes.length > 0 ? 
           <div>
             {likes.map(like => {
